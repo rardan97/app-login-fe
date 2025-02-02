@@ -3,9 +3,11 @@ import RegisterComponents from '../components/RegisterComponents';
 
 const RegisterPage = () => {
   return (
-    <div>
-        <RegisterComponents />
-    </div>
+    <>
+      <div className="bg">
+          <RegisterComponents />
+      </div>
+    </>
   )
 }
 

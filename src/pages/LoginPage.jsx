@@ -3,11 +3,11 @@ import LoginComponent from "../components/LoginComponent"
 
 const LoginPage = () => {
   return (
-    <div>
+    <>
+    <div className="bg">
         <LoginComponent />
-        
-        
     </div>
+    </>
   )
 }
 

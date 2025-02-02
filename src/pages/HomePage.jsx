@@ -1,10 +1,17 @@
-import { Link } from "react-router"
+
+import HeaderComponent from "../components/HeaderComponent"
+import HomeComponent from "../components/HomeComponent"
+import NavbarComponent from "../components/NavbarComponent"
 
 const HomePage = () => {
   return (
-    <div>
-        <Link to="/logout" className="nav-link active" > <span style={{ fontSize: "17px"}}>Logout</span></Link>
-    </div>
+    <>
+      <NavbarComponent />
+      <HeaderComponent />
+      <div>
+        <HomeComponent />
+      </div>
+    </>
   )
 }
 
