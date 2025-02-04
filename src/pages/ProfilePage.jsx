@@ -6,10 +6,10 @@ import ProfileComponent from "../components/ProfileComponent"
 const ProfilePage = () => {
   return (
     <>
-    <NavbarComponent />
-    <div>
-        <ProfileComponent />
-    </div>
+      <NavbarComponent />
+      <div>
+          <ProfileComponent />
+      </div>
     </>
   )
 }

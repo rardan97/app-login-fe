@@ -39,19 +39,6 @@ const RoleComponent = () => {
       
     }, [getListAllRole]);
   
-    
-
-
-  
-    // function getListAllRole(){
-    //   listRole(token).then((response) => {
-    //     setRoles(response.data);
-    //     console.log("Success proccess data");
-    //   }).catch(error => {
-    //     console.log("gagal proccess data");
-    //     console.log(error);
-    //   })
-    // }
 
     function saveRole(e){
         e.preventDefault();

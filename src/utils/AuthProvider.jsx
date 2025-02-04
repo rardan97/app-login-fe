@@ -1,33 +1,62 @@
 import { useState, useEffect } from "react";
-// import {AuthContext} from "./AuthContext";
 import { createContext } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("accessToken") || "");
+    const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken") || "");
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const storedToken = localStorage.getItem("accessToken");
+        if (storedToken) {
+            try{
+                setAccessToken(storedToken);
+                const userTemp = localStorage.getItem("userData");
+                if(userTemp){
+                    const parsedUserTemp = JSON.parse(userTemp);
+                    setUser({username: parsedUserTemp.userName, roles: parsedUserTemp.roles})
+                } else{
+                    console.log("user nullll");
+                }
+            } catch(error){
+                console.error("Error token:", error);
+                setUser(null);
+                setAccessToken("");
+                localStorage.removeItem("accessToken");
+            } 
+        }
+    }, []);
 
-  // Cek token saat aplikasi pertama kali dijalankan
-  useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    if (storedToken) {
-        console.log("Check AuthProvider : "+storedToken);
-      setToken(storedToken);
-    }
-  }, []);
+    const updateToken = (newToken) => {
+        if (!newToken) {
+            setAccessToken("");
+            setUser(null);
+            localStorage.removeItem("accessToken");
+        } else {
+            try {
+                setAccessToken(newToken);
+                localStorage.setItem("accessToken", newToken);
+                const userTemp = localStorage.getItem("userData");
+                console.log("userTemp: "+userTemp);
+                if(userTemp){
+                    const parsedUserTemp = JSON.parse(userTemp);
+                    console.log("userTemp Name 2: "+parsedUserTemp.userName);
+                    console.log("userTemp Role 2: "+parsedUserTemp.roles);
+                    setUser({username: parsedUserTemp.userName, roles: parsedUserTemp.roles})
+                } else{
+                    console.log("user nullll");
+                }
+            
+            } catch (error) {
+                console.error("Token update failed:", error);
+                setUser(null);
+            }
+        }
+    };
 
-  // Simpan token ke localStorage setiap kali token berubah
-  const updateToken = (newToken) => {
-    setToken(newToken);
-    localStorage.setItem("accessToken", newToken);
-  };
-
-  return (
-    <AuthContext.Provider value={{ token, setToken: updateToken }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ accessToken, setAccessToken: updateToken, user, setUser }}>
+        {children}
+        </AuthContext.Provider>
+    );
 };
-
-// const AuthContextExport = { AuthContext, AuthProvider };
-// export { AuthProvider, AuthContext };

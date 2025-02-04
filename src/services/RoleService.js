@@ -3,7 +3,7 @@ import axios from "axios";
 const REST_API_BASE_URL = "http://localhost:8080/api/role";
 const api = axios.create({
     baseURL: REST_API_BASE_URL,
-    withCredentials: true,  // Jika perlu mengirimkan cookies
+    withCredentials: true,
   });
 
 export const listRole = (token) => api.get(REST_API_BASE_URL + '/getAllRole' ,{

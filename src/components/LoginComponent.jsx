@@ -11,7 +11,7 @@ const LoginComponent = () => {
         userPassword:''
     });
 
-      async function loginAction(e) {
+    async function loginAction(e) {
         e.preventDefault();
         console.log("process save");
         if (validateForm()) {
@@ -19,23 +19,23 @@ const LoginComponent = () => {
             const username = userName;
             const password = userPassword;
             const userDataLogin = { username, password };
-            console.log("data userDataLogin:", userDataLogin);
-
             try {
-                // Menggunakan async/await untuk menangani login
-                const response = await signin(userDataLogin); // Menunggu hasil dari signin
+                const response = await signin(userDataLogin);
                 console.log(response);
-                console.log(response.token);
-                console.log("success login");
-
-                // Simpan token di localStorage atau sessionStorage
-                // localStorage.removeItem("accessToken");
-                // localStorage.removeItem("refreshToken");
-                localStorage.setItem("accessToken", response.token);  // Periksa keamanan penyimpanan token
-                localStorage.setItem("refreshToken", response.refreshToken); 
-
-                alert("Login berhasil!");
-                window.location.href = "/home"; // Redirect ke halaman dashboard setelah login berhasil
+                if(response.status == 200){
+                    const responseData = response.data;
+                    const data = {
+                        userId: responseData.token,
+                        userName: responseData.userName,
+                        roles: responseData.roles
+                    };
+                    localStorage.setItem("accessToken", responseData.token);
+                    localStorage.setItem("refreshToken", responseData.refreshToken);
+                    localStorage.setItem("userData", JSON.stringify(data));
+                    alert("Login berhasil!");
+                        window.location.href = "/home";
+                }
+                
             } catch (error) {
                 console.error("Login failed:", error);
                 alert("Login gagal. Periksa kembali username dan password.");
@@ -43,33 +43,29 @@ const LoginComponent = () => {
         }
     }
 
-      function validateForm(){
+    function validateForm(){
         console.log("proccess validation");
-          let valid = true;
-          const errorsCopy = {... errors}
-          
-          if(userName.trim()){
-              errorsCopy.userName = '';
-          }else{
-              errorsCopy.userName = 'userName is required';
-              valid = false;
-          }
+            let valid = true;
+            const errorsCopy = {... errors}
+            if(userName.trim()){
+                errorsCopy.userName = '';
+            }else{
+                errorsCopy.userName = 'userName is required';
+                valid = false;
+            }
 
-          if(userPassword.trim()){
+            if(userPassword.trim()){
             errorsCopy.userPassword = '';
         }else{
             errorsCopy.userPassword = 'userPassword is required';
             valid = false;
         }
-      
-          
-          setErrors(errorsCopy);
-          return valid;
-      }
+        setErrors(errorsCopy);
+        return valid;
+    }
 
-    
-  return (
-    <>
+    return (
+        <>
         <div>
             <div className='container'>
                 <div className='row justify-content-center'>
@@ -79,16 +75,13 @@ const LoginComponent = () => {
                             <div className='text-center'>
                                     <h4>Login</h4> 
                                 </div>
-                                <div className='auth '>
+                                <div className='auth'>
                                     <form>
-                                    
                                         <div className="mb-3">
                                             <label className="form-label">Username</label>
-                                            
                                             <input 
                                                 type="text" 
-                                                className="form-control" 
-                                                // value={userName}
+                                                className="form-control"
                                                 id="userName"
                                                 onChange={(e) => setUserName(e.target.value)}
                                                 style={{backgroundColor: "rgba(28, 53, 32, 0.08)"}}
@@ -99,29 +92,25 @@ const LoginComponent = () => {
                                             <input 
                                                 type="password" 
                                                 className="form-control" 
-                                                id="userPassword" 
-                                                // value={userPassword}
+                                                id="userPassword"
                                                 onChange={(e) => setUserPassword(e.target.value)}
                                                 style={{backgroundColor: "rgba(28, 53, 32, 0.08)"}}
                                             />
                                         </div>
-
                                         <button type="submit" className="btn btn-primary w-100" onClick={loginAction}>Login</button>
-                                      
                                     </form>
                                     <div className='text-center mt-4'>
                                         <span >Dont have an account  <Link to="/register"> Register</Link></span>
                                     </div>
-                                    </div>
-                               
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default LoginComponent
