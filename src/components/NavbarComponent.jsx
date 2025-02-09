@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router"
+import { AuthContext } from "../utils/AuthProvider";
 
 const NavbarComponent = () => {
+
+    const { user } = useContext(AuthContext);// Ambil user dari AuthContext
 
   return (
     <>
@@ -19,9 +23,14 @@ const NavbarComponent = () => {
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link active" > Profile</Link>
                         </li>
-                        <li className="nav-item">
+                        {user && user.roles[0] === "ROLE_ADMIN" && ( // Hanya tampil jika ROLE_ADMIN
+                            <li className="nav-item">
+                                <Link to="/role" className="nav-link active">Role</Link>
+                            </li>
+                        )}
+                        {/* <li className="nav-item">
                             <Link to="/role" className="nav-link active" > Role</Link>
-                        </li>
+                        </li> */}
                     </ul>
                     <div className="d-flex" role="search">
                         <Link to="/logout" className="btn btn-danger" > Logout</Link>

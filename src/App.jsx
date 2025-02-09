@@ -35,15 +35,14 @@ function App() {
                     <ProfilePage />
                 </AuthMiddleware>
                 }></Route>
-            <Route >
+           
                 <Route path="/role" element={
                 <AuthMiddleware>
-                <RolePage element={
-                    <ProtectedRoute allowedRoles={["ROLE_ADMIN"]} />} 
-                />
+                    <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
+                        <RolePage />
+                    </ProtectedRoute>
                 </AuthMiddleware>
-                } />
-            </Route>
+                }></Route>
         </Routes>
     </AuthProvider>
     )

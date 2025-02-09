@@ -7,7 +7,21 @@ const api = axios.create({
   withCredentials: true, 
 });
 
-export const signup = (register) => axios.get(REST_API_BASE_URL + '/signup' + register);
+export const getRoleAll = () =>  axios.get(REST_API_BASE_URL + '/getAllRole');
+
+// export const signup = (register) => axios.post(REST_API_BASE_URL + '/signup' + register);
+
+export const signup = (register) => {
+  try{
+    console.log(register)
+    const response =  api.post('/signup', register);
+    return response;
+  }catch(error){
+    console.error("Error during session check:", error);
+  }
+  
+};
+
 
 export async function signin(userDataLogin) {
   try {
