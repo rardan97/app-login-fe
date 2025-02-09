@@ -8,6 +8,17 @@
     /* align-items: center; */
     /* text-align: center; */
 }
+
+.bg-home-page{
+  background-image: url('/bg-home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 345px;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* text-align: center; */
+}
 /* 
 
 .bg-home{

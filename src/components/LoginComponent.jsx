@@ -33,6 +33,7 @@ const LoginComponent = () => {
                     localStorage.setItem("refreshToken", responseData.refreshToken);
                     localStorage.setItem("userData", JSON.stringify(data));
                     alert("Login berhasil!");
+                    // <Navigate to="/home" />
                         window.location.href = "/home";
                 }
                 

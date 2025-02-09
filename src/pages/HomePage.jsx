@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <>
       <NavbarComponent />
-      <HeaderComponent />
+      {/* <HeaderComponent /> */}
       <div>
         <HomeComponent />
       </div>

@@ -3,118 +3,107 @@ import { Link } from 'react-router-dom';
 import { getRoleAll, signup } from '../services/AuthService';
 
 const RegisterComponents = () => {
-    const [userFullName, setUserFullName] = useState('');
-    const [userName, setUserName] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    const [userRole, setUserRole] = useState('');
-    const [roles, setRoles] = useState([]);
+const [userFullName, setUserFullName] = useState('');
+const [userName, setUserName] = useState('');
+const [userPassword, setUserPassword] = useState('');
+const [userRole, setUserRole] = useState('');
+const [roles, setRoles] = useState([]);
+const [alertMessage, setAlertMessage] = useState("");
+const [errors, setErrors] = useState({
+    userFullName:'',
+    userName:'',
+    userPassword:'',
+    userRole:''
+    });
 
-    const [errors, setErrors] = useState({
-        userFullName:'',
-        userName:'',
-        userPassword:'',
-        userRole:''
-      });
+useEffect(() => {
+    getListAllRole();
+    }, []);
 
-
-    // const roles = ["Admin", "User", "Editor", "Viewer"];
-
-    useEffect(() => {
-        getListAllRole();
-      }, []);
-
-    const handleChange = (event) => {
-        console.log("select :"+ event.target.value)
-        setUserRole(event.target.value);
+    const showAlert = (message) => {
+        setAlertMessage(message);
+        setTimeout(() => setAlertMessage(""), 4000); // Hilang otomatis setelah 3 detik
       };
 
-    function getListAllRole(){
-        getRoleAll().then((response) => {
-            console.log(response);
-            setRoles(response.data);
+const handleChange = (event) => {
+    console.log("select :"+ event.target.value)
+    setUserRole(event.target.value);
+    };
+
+function getListAllRole(){
+    getRoleAll().then((response) => {
+        console.log(response);
+        setRoles(response.data);
+    }).catch(error => {
+        console.log(error);
+    })
+}
+
+
+function saveUser(e){
+    e.preventDefault();
+    console.log("proccess save");
+    if(validateForm()){
+        const userData = {userFullName:userFullName, username:userName, password:userPassword, role:userRole}
+        console.log("data todo :"+userData)
+        signup(userData).then((response) => {
+
+            showAlert("Ini alert custom!")
+        console.log(response.data);
+        // getListAllTodo();
         }).catch(error => {
-          console.log(error);
+            
+        console.log(error);
+        showAlert("Ini alert custom!")
         })
+    }
     }
 
 
-    function saveUser(e){
-        e.preventDefault();
-        console.log("proccess save");
-        // if(validateForm()){
-          console.log("validation save");
-          console.log("userFullName : "+userFullName);
-          console.log("userName : "+userName);
-          console.log("userPassword : "+userPassword);
-          console.log("userRole : "+userRole);
-          
-          const username = userName;
-          const password = userPassword;
-          const role = userRole;
-          const userData = {userFullName, username, password, role}
-          console.log("data todo :"+userData)
-          signup(userData).then((response) => {
-            console.log(response.data);
-            // getListAllTodo();
-          }).catch(error => {
-            console.log(error);
-          })
-        // }
-      }
-
-    //   function clearInput(){
-    //     setUserFullName('');
-    //     setUserName('');
-    //     setUserPassword('');
-    //     setUserRole('');
-    //   }
-
-
-        function validateForm(){
-            console.log("proccess validation");
-            let valid = true;
-            const errorsCopy = {... errors}
-          
-            if(userFullName.trim()){
-                errorsCopy.userFullName = '';
-            }else{
-                errorsCopy.userFullName = 'userFullName is required';
-                valid = false;
-            }
-      
-            if(userName.trim()){
-                errorsCopy.userName = '';
-            }else{
-                errorsCopy.userName = 'userName is required';
-                valid = false;
-            }
-
-            if(userPassword.trim()){
-                errorsCopy.userPassword = '';
-            }else{
-                errorsCopy.userPassword = 'userPassword is required';
-                valid = false;
-            }
-
-            if(userRole.trim()){
-                errorsCopy.userRole = '';
-            }else{
-                errorsCopy.userRole = 'userRole is required';
-                valid = false;
-            }
-
-            
-      
-          
-            setErrors(errorsCopy);
-            return valid;
+    function validateForm(){
+        console.log("proccess validation");
+        let valid = true;
+        const errorsCopy = {... errors}
+        
+        if(userFullName.trim()){
+            errorsCopy.userFullName = '';
+        }else{
+            errorsCopy.userFullName = 'userFullName is required';
+            valid = false;
         }
-      
+    
+        if(userName.trim()){
+            errorsCopy.userName = '';
+        }else{
+            errorsCopy.userName = 'userName is required';
+            valid = false;
+        }
 
+        if(userPassword.trim()){
+            errorsCopy.userPassword = '';
+        }else{
+            errorsCopy.userPassword = 'userPassword is required';
+            valid = false;
+        }
 
+        if (!userRole || userRole === "") {
+            errorsCopy.userRole = "Please select a valid role.";
+            valid = false;
+            }else{
+            errorsCopy.userRole = '';   
+        }    
+        setErrors(errorsCopy);
+        return valid;
+    }
+    
     return (
     <>
     <div>
+    {alertMessage && (
+        <div style={{ background: "red", color: "white", padding: "10px" }}>
+          {alertMessage}
+        </div>
+      )}
         <div className='container'>
             <div className='row justify-content-center'>
                 <div className='col-xl-5 col-lg-5 col-md-8 col-sm-12'>
