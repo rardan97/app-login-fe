@@ -23,14 +23,16 @@ const NavbarComponent = () => {
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link active" > Profile</Link>
                         </li>
-                        {user && user.roles[0] === "ROLE_ADMIN" && ( // Hanya tampil jika ROLE_ADMIN
+                        {user && user.roles[0] === "ROLE_ADMIN" && (
                             <li className="nav-item">
                                 <Link to="/role" className="nav-link active">Role</Link>
                             </li>
                         )}
-                        {/* <li className="nav-item">
-                            <Link to="/role" className="nav-link active" > Role</Link>
-                        </li> */}
+                        {user && user.roles[0] === "ROLE_ADMIN" && (
+                            <li className="nav-item">
+                                <Link to="/user" className="nav-link active">User</Link>
+                            </li> 
+                        )}
                     </ul>
                     <div className="d-flex" role="search">
                         <Link to="/logout" className="btn btn-danger" > Logout</Link>

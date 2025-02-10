@@ -6,34 +6,106 @@ const api = axios.create({
     withCredentials: true,
   });
 
-export const listRole = (token) => api.get(REST_API_BASE_URL + '/getAllRole' ,{
+// export const listRole = (token) => api.get('/getAllRole' ,{
     
-    headers: {
-        'Authorization': 'Bearer '+token
-    },
-})
+//     headers: {
+//         'Authorization': 'Bearer '+token
+//     },
+// })
 
 
-export const getValueById = (token, roleId) => axios.get(REST_API_BASE_URL + '/getRoleById/' + roleId, {
-    headers: {
-        'Authorization': 'Bearer '+token,
-    },
-});
+export const listRole = (token) => {
+    try {
+        const response = api.get("/getAllRole", {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          }
+      });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error during session check:", error);
+        localStorage.removeItem("accessToken");
+        throw new Error("Login failed");
+    }    
+}
 
-export const createRole = (token, role) => axios.post(REST_API_BASE_URL+'/createRole', role, {
-    headers: {
-        'Authorization': 'Bearer '+token,
-    },
-});
 
-export const updateRole = (token, roleId, role) => axios.put(REST_API_BASE_URL +'/updateRole/'+roleId, role ,{
-    headers: {
-        'Authorization': 'Bearer '+token,
-    },
-});
+export const getValueById = (token, roleId) => {
+    try {
+        const response = api.get("/getRoleById/" + roleId, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          }
+      });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error during session check:", error);
+        localStorage.removeItem("accessToken");
+        throw new Error("Login failed");
+    }    
+}
 
-export const deleteRole = (token, roleId) => axios.delete(REST_API_BASE_URL +'/deleteRole/'+roleId ,{
-    headers: {
-        'Authorization': 'Bearer '+token,
-    },
-});
+export const createRole = (token, role) => {
+    try {
+        console.log(role)
+        const response = api.post("/createRole", role, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          }
+      });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error during session check:", error);
+        localStorage.removeItem("accessToken");
+        throw new Error("Login failed");
+    }    
+}
+
+export const updateRole = (token, roleId, role) => {
+    try {
+        console.log(role)
+        const response = api.put("/updateRole/"+roleId, role, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          }
+      });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error during session check:", error);
+        localStorage.removeItem("accessToken");
+        throw new Error("Login failed");
+    }    
+}
+
+export const deleteRole = (token, roleId) => {
+    try {
+        // console.log(role)
+        const response = api.delete("/deleteRole/"+roleId, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          }
+      });
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.error("Error during session check:", error);
+        localStorage.removeItem("accessToken");
+        throw new Error("Login failed");
+    }    
+}
+
+
+// export const deleteRole = (token, roleId) => axios.delete(REST_API_BASE_URL +'/deleteRole/'+roleId ,{
+//     headers: {
+//         'Authorization': 'Bearer '+token,
+//     },
+// });

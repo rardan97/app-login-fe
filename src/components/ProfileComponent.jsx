@@ -5,10 +5,6 @@ const ProfileComponent = () => {
 
    const [users, setUsers] = useState([]);
      
-
-
- 
-
    useEffect(() => {
        
     const userTemp = localStorage.getItem("userData");
@@ -22,11 +18,6 @@ const ProfileComponent = () => {
         
         
       }, []);
-
-
-
-
-
 
   // console.log(user);
   return (

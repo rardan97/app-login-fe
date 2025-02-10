@@ -11,6 +11,7 @@ import {AuthProvider} from './utils/AuthProvider'
 import ProtectedRoute from './utils/ProtectedRoute'
 import Unauthorized from './pages/Unauthorized'
 import LogoutComponent from './components/LogoutComponent'
+import UserPage from './pages/UserPage'
 
 function App() {
     return (
@@ -27,22 +28,28 @@ function App() {
                 <AuthMiddleware>
                     <HomePage />
                 </AuthMiddleware>
-                }></Route>
+            }></Route>
             <Route 
                 path='/profile' 
                 element={
                 <AuthMiddleware>
                     <ProfilePage />
                 </AuthMiddleware>
-                }></Route>
-           
-                <Route path="/role" element={
+            }></Route>
+            <Route path="/role" element={
                 <AuthMiddleware>
                     <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
                         <RolePage />
                     </ProtectedRoute>
                 </AuthMiddleware>
-                }></Route>
+            }></Route>
+                <Route path="/user" element={
+                <AuthMiddleware>
+                    <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
+                        <UserPage />
+                    </ProtectedRoute>
+                </AuthMiddleware>
+            }></Route>
         </Routes>
     </AuthProvider>
     )

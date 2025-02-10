@@ -9,8 +9,6 @@ const api = axios.create({
 
 export const getRoleAll = () =>  axios.get(REST_API_BASE_URL + '/getAllRole');
 
-// export const signup = (register) => axios.post(REST_API_BASE_URL + '/signup' + register);
-
 export const signup = (register) => {
   try{
     console.log(register)
@@ -19,9 +17,7 @@ export const signup = (register) => {
   }catch(error){
     console.error("Error during session check:", error);
   }
-  
 };
-
 
 export async function signin(userDataLogin) {
   try {
@@ -57,7 +53,3 @@ export const signout = (token) => {
     },
   });
 };
-
-
-  
-
