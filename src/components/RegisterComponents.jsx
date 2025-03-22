@@ -9,6 +9,7 @@ const [userPassword, setUserPassword] = useState('');
 const [userRole, setUserRole] = useState('');
 const [roles, setRoles] = useState([]);
 const [alertMessage, setAlertMessage] = useState("");
+const [alertType, setAlertType] = useState("");
 const [errors, setErrors] = useState({
     userFullName:'',
     userName:'',
@@ -20,9 +21,13 @@ useEffect(() => {
     getListAllRole();
     }, []);
 
-    const showAlert = (message) => {
+    const showAlert = (message, type) => {
         setAlertMessage(message);
-        setTimeout(() => setAlertMessage(""), 4000); // Hilang otomatis setelah 3 detik
+        setAlertType(type);
+        setTimeout(() => {
+            setAlertMessage("");
+            setAlertType("");
+          }, 5000); // Hilang otomatis setelah 5 detik
       };
 
 const handleChange = (event) => {
@@ -48,13 +53,13 @@ function saveUser(e){
         console.log("data todo :"+userData)
         signup(userData).then((response) => {
 
-            showAlert("Ini alert custom!")
-        console.log(response.data);
+            showAlert("Login Success", "success")
+            console.log(response.data);
         // getListAllTodo();
         }).catch(error => {
             
         console.log(error);
-        showAlert("Ini alert custom!")
+        showAlert("Login Failed", "failed")
         })
     }
     }
@@ -100,7 +105,15 @@ function saveUser(e){
     <>
     <div>
     {alertMessage && (
-        <div style={{ background: "red", color: "white", padding: "10px" }}>
+        // <div className={`alert ${alertType === "success" ? "alert-success" : "alert-danger"}`} role="alert">
+        <div
+            style={{
+            background: alertType === "success" ? "green" : "red",
+            color: "white",
+            padding: "10px",
+            }}
+        >
+        {/* <div style={{ background: "red", color: "white", padding: "10px" }}> */}
           {alertMessage}
         </div>
       )}

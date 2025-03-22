@@ -22,26 +22,11 @@ const ProfileComponent = () => {
   // console.log(user);
   return (
     <>
-    <div className="container-fluid">
+    <div className="container mt-4">
     <div className="card border-0">
       <div className="row">
-        <div className="col-sm-3">
-          <div className="card">
-            <div className="card-body">
-              <div className="d-flex justify-content-center">
-              <div>
-               
-              <img src="..." className="rounded mx-auto d-block" alt="..."></img>
-              <h5>{users.username}</h5>
-
-              </div>
-              
-              </div>
-            </div>
-           
-          </div>
-        </div>
-        <div className="col-sm-9">
+        
+        <div className="col-sm-12">
           <div className="card">
             <div className="card-body">
             <div className="mb-3 row">
